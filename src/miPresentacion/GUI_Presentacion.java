@@ -4,8 +4,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class GUI_Presentacion extends JFrame
 {
@@ -40,20 +39,24 @@ public class GUI_Presentacion extends JFrame
         this.add(titulo, BorderLayout.NORTH);
 
         miFoto = new JButton("Así me veo");
-        miFoto.addActionListener(escucha);
+        miFoto.addMouseListener(escucha);
         misHobby = new JButton("Este es mi Hobby");
-        misHobby.addActionListener(escucha);
+        misHobby.addMouseListener(escucha);
         misExpectativas = new JButton("Creo que...");
-        misExpectativas.addActionListener(escucha);
+        //misExpectativas.addKeyListener(escucha);
+        //misExpectativas.setFocusable(true);
 
         panelBotones = new JPanel();
         panelBotones.add(miFoto);
         panelBotones.add(misHobby);
-        panelBotones.add(misExpectativas);
+        //panelBotones.add(misExpectativas);
+        panelBotones.addKeyListener(escucha);
+        panelBotones.setFocusable(true);
         this.add(panelBotones, BorderLayout.SOUTH);
 
         panelDatos = new JPanel();
         panelDatos.setBorder(BorderFactory.createTitledBorder(null,"Un poco mas de mi:", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, new Font("Calibri",Font.PLAIN,20),Color.BLACK));
+
         this.add(panelDatos,BorderLayout.CENTER);
 
         labelImagen = new JLabel();
@@ -75,13 +78,14 @@ public class GUI_Presentacion extends JFrame
         });
     }
 
-    private class Escucha implements ActionListener
+    private class Escucha extends MouseAdapter implements KeyListener
     {
         private ImageIcon image;
         private Image imgOtroTamaño;
         private Icon imageNuevoTamaño;
+
         @Override
-        public void actionPerformed(ActionEvent e)
+        public void mouseClicked(MouseEvent e)
         {
             panelDatos.removeAll();
             if(e.getSource()==miFoto)
@@ -94,24 +98,47 @@ public class GUI_Presentacion extends JFrame
             }
             else if(e.getSource()==misHobby)
             {
-                image = new ImageIcon(getClass().getResource("/recursos/misHobby.jpg"));
-                imgOtroTamaño = image.getImage().getScaledInstance(550, 400, Image.SCALE_SMOOTH);
-                imageNuevoTamaño = new ImageIcon(imgOtroTamaño);
-                labelImagen.setIcon(imageNuevoTamaño);
-                panelDatos.add(labelImagen);
+                if(e.getClickCount()==2)
+                {
+                    image = new ImageIcon(getClass().getResource("/recursos/misHobby.jpg"));
+                    imgOtroTamaño = image.getImage().getScaledInstance(550, 400, Image.SCALE_SMOOTH);
+                    imageNuevoTamaño = new ImageIcon(imgOtroTamaño);
+                    labelImagen.setIcon(imageNuevoTamaño);
+                    panelDatos.add(labelImagen);
+                }
             }
-            else
+            revalidate();
+            repaint();
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e)
+        {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e)
+        {
+            panelDatos.removeAll();
+            if (e.VK_M == e.getKeyCode())
             {
-                textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n"+
-                                            "me encantaría poder aprender a usar este lenguaje \n"+
-                                            "tan interesante y con tanto potencial para \n"+
-                                            "fabricar programas. Tengo conocimiento de programación \n"+
-                                            "funcional y orientada a objetos.");
+                textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n" +
+                        "me encantaría poder aprender a usar este lenguaje \n" +
+                        "tan interesante y con tanto potencial para \n" +
+                        "fabricar programas. Tengo conocimiento de programación \n" +
+                        "funcional y orientada a objetos.");
                 textoExpectativas.setBackground(null);
                 panelDatos.add(textoExpectativas);
             }
             revalidate();
             repaint();
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e)
+        {
+
         }
     }
 }
