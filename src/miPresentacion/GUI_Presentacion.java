@@ -40,8 +40,12 @@ public class GUI_Presentacion extends JFrame
 
         miFoto = new JButton("Así me veo");
         miFoto.addMouseListener(escucha);
+        miFoto.addKeyListener(escucha);
+        miFoto.setFocusable(true);
         misHobby = new JButton("Este es mi Hobby");
         misHobby.addMouseListener(escucha);
+        misHobby.addKeyListener(escucha);
+        misHobby.setFocusable(true);
         misExpectativas = new JButton("Creo que...");
         //misExpectativas.addKeyListener(escucha);
         //misExpectativas.setFocusable(true);
@@ -121,18 +125,50 @@ public class GUI_Presentacion extends JFrame
         public void keyPressed(KeyEvent e)
         {
             panelDatos.removeAll();
-            if (e.VK_M == e.getKeyCode())
+            if(e.getSource()==miFoto)
             {
-                textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n" +
-                        "me encantaría poder aprender a usar este lenguaje \n" +
-                        "tan interesante y con tanto potencial para \n" +
-                        "fabricar programas. Tengo conocimiento de programación \n" +
-                        "funcional y orientada a objetos.");
-                textoExpectativas.setBackground(null);
-                panelDatos.add(textoExpectativas);
+                if (e.VK_M == e.getKeyCode())
+                {
+                    textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n" +
+                            "me encantaría poder aprender a usar este lenguaje \n" +
+                            "tan interesante y con tanto potencial para \n" +
+                            "fabricar programas. Tengo conocimiento de programación \n" +
+                            "funcional y orientada a objetos.");
+                    textoExpectativas.setBackground(null);
+                    panelDatos.add(textoExpectativas);
+                }
+                revalidate();
+                repaint();
             }
-            revalidate();
-            repaint();
+            else if(e.getSource()==misHobby)
+            {
+                if (e.VK_M == e.getKeyCode())
+                {
+                    textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n" +
+                            "me encantaría poder aprender a usar este lenguaje \n" +
+                            "tan interesante y con tanto potencial para \n" +
+                            "fabricar programas. Tengo conocimiento de programación \n" +
+                            "funcional y orientada a objetos.");
+                    textoExpectativas.setBackground(null);
+                    panelDatos.add(textoExpectativas);
+                }
+                revalidate();
+                repaint();
+            }
+            else
+            {
+                if (e.VK_M == e.getKeyCode()) {
+                    textoExpectativas.setText("Una vez vi un poco de java pero fue solo lo básico, \n" +
+                            "me encantaría poder aprender a usar este lenguaje \n" +
+                            "tan interesante y con tanto potencial para \n" +
+                            "fabricar programas. Tengo conocimiento de programación \n" +
+                            "funcional y orientada a objetos.");
+                    textoExpectativas.setBackground(null);
+                    panelDatos.add(textoExpectativas);
+                }
+                revalidate();
+                repaint();
+            }
         }
 
         @Override
